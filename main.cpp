@@ -3,7 +3,13 @@
 #include <SDL.h>
 #include <SDL/SDL_image.h>
 
+#define WIDTH 800
+#define HEIGHT 600
+
 static SDL_Surface *screen;
+
+static int ctr_w = WIDTH / 2;
+static int ctr_h = HEIGHT / 2;
 
 struct  SDL_Point {
 	int x;
@@ -17,7 +23,7 @@ class Character {
 
 		void loadBase(SDL_Surface *base, int x, int y, int width, int height);
 		const SDL_Point &pos(void) const;
-		void setPos(const SDL_Point &p);
+		void setPos(int x, int y);
 		void apply(void);
 
 	private:
@@ -55,9 +61,9 @@ const SDL_Point &Character::pos(void) const {
 	return m_pos;
 }
 
-void  Character::setPos(const SDL_Point &p) {
-	m_pos.x = p.x;
-	m_pos.y = p.y;
+void  Character::setPos(int x, int y) {
+	m_pos.x = x;
+	m_pos.y = y;
 }
 
 void Character::apply(void) {
@@ -86,9 +92,9 @@ SDL_Surface *load_image(const char *path) {
 void init_video(void) {
 	if(screen)
 		SDL_FreeSurface(screen);
-	screen = SDL_SetVideoMode(800, 600, 16, SDL_SWSURFACE);
+	screen = SDL_SetVideoMode(WIDTH, HEIGHT, 16, SDL_SWSURFACE);
 	if(!screen) {
-		fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
+		fprintf(stderr, "Unable to set 800x600 video: %s\n", SDL_GetError());
 		exit(1);
 	}
 }
@@ -101,7 +107,8 @@ void init_chars(void) {
 	}
 
 	hero = new Character();
-	hero->loadBase(loaded, 0, 32, 16, 17);
+	hero->setPos(ctr_w - 6, ctr_h);
+	hero->loadBase(loaded, 2, 32, 13, 16);
 }
 
 int main(int argc, char **argv) {
