@@ -1,9 +1,29 @@
 #include <stdlib.h>
 
 #include "SDL.h"
+#include "SDL/SDL_image.h"
+
+static SDL_Surface *screen;
+static SDL_Surface *hero;
+class Character {
+	public:
+		Character(SDL_Surface *base);
+
+	private:
+		SDL_Surface *m_base;
+};
+
+Character::Character(SDL_Surface *base)
+	: m_base(base)
+{
+}
+
+class Hero : public Character {
+};
 
 void init_video(void) {
-	SDL_Surface *screen;
+	if(screen)
+		SDL_FreeSurface(screen);
 	screen = SDL_SetVideoMode(800, 600, 16, SDL_SWSURFACE);
 	if(!screen) {
 		fprintf(stderr, "Unable to set 640x480 video: %s\n", SDL_GetError());
@@ -35,6 +55,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	exit(0);
+	SDL_FreeSurface(screen);
+	SDL_Quit();
 }
 
