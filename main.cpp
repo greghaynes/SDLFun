@@ -1,25 +1,87 @@
 #include <stdlib.h>
 
-#include "SDL.h"
-#include "SDL/SDL_image.h"
+#include <SDL.h>
+#include <SDL/SDL_image.h>
 
 static SDL_Surface *screen;
-static SDL_Surface *hero;
+
+struct  SDL_Point {
+	int x;
+	int y;
+};
+
 class Character {
 	public:
-		Character(SDL_Surface *base);
+		Character();
+		~Character();
+
+		void loadBase(SDL_Surface *base, int x, int y, int width, int height);
+		const SDL_Point &pos(void) const;
+		void setPos(const SDL_Point &p);
+		void apply(void);
 
 	private:
+		SDL_Point m_pos; // Position of bottom left corner
+		SDL_Rect m_clip;
 		SDL_Surface *m_base;
 };
 
-Character::Character(SDL_Surface *base)
-	: m_base(base)
-{
+Character::Character()
+	: m_base(0) {
+	m_clip.x = 0;
+	m_clip.y = 0;
+	m_clip.w = 0;
+	m_clip.h = 0;
+
+	m_pos.x = 0;
+	m_pos.y = 0;
 }
 
-class Hero : public Character {
-};
+Character::~Character() {
+	if(m_base)
+		SDL_FreeSurface(m_base);
+}
+
+void Character::loadBase(SDL_Surface *base, int x, int y,
+                         int width, int height) {
+	m_base = base;
+	m_clip.x = x;
+	m_clip.y = y;
+	m_clip.w = width;
+	m_clip.h = height;
+}
+
+const SDL_Point &Character::pos(void) const {
+	return m_pos;
+}
+
+void  Character::setPos(const SDL_Point &p) {
+	m_pos.x = p.x;
+	m_pos.y = p.y;
+}
+
+void Character::apply(void) {
+	SDL_Rect offset;
+	offset.x = m_pos.x;
+	offset.y = m_pos.y;
+	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
+}
+
+static Character *hero;
+
+SDL_Surface *load_image(const char *path) {
+	SDL_Surface *loadedImage;
+	SDL_Surface *optimizedImage;
+
+	loadedImage = IMG_Load(path);
+	if(!loadedImage)
+		return 0;
+
+	optimizedImage = SDL_DisplayFormat(loadedImage);
+
+	SDL_FreeSurface(loadedImage);
+	return optimizedImage;
+}
 
 void init_video(void) {
 	if(screen)
@@ -31,6 +93,17 @@ void init_video(void) {
 	}
 }
 
+void init_chars(void) {
+	SDL_Surface *loaded = load_image("data/sheet_1.png");
+	if(!loaded) {
+		fprintf(stderr, "Could not load sprite flie: %s\n", SDL_GetError());
+		exit(1);
+	}
+
+	hero = new Character();
+	hero->loadBase(loaded, 0, 32, 16, 17);
+}
+
 int main(int argc, char **argv) {
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
 		fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
@@ -39,10 +112,16 @@ int main(int argc, char **argv) {
 	atexit(SDL_Quit);
 
 	init_video();
+	init_chars();
+	hero->apply();
 
 	SDL_Event event;
 	bool do_quit = false;
 	while(!do_quit) {
+		if(SDL_Flip(screen) == -1) {
+			fprintf(stderr, "Could not flip screen buffer\n");
+			exit(1);
+		}
 		SDL_WaitEvent(&event);
 
 		switch(event.type) {
@@ -53,6 +132,7 @@ int main(int argc, char **argv) {
 			case SDL_QUIT:
 				do_quit = true;
 		}
+
 	}
 
 	SDL_FreeSurface(screen);
