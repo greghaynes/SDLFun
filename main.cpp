@@ -231,6 +231,7 @@ int main(int argc, char **argv) {
 	bool do_quit = false;
 	fps_update.start();
 	SDL_Surface *message;
+	bool show_fps = false;
 	while(!do_quit) {
 		fps.start();
 
@@ -239,6 +240,11 @@ int main(int argc, char **argv) {
 				case SDL_KEYDOWN:
 					printf("The %s key was pressed!\n",
 						SDL_GetKeyName(event.key.keysym.sym));
+					switch(event.key.keysym.sym) {
+						case SDLK_f:
+							show_fps = !show_fps;
+							break;
+					}
 					break;
 				case SDL_QUIT:
 					do_quit = true;
@@ -246,15 +252,19 @@ int main(int argc, char **argv) {
 		}
 
 		
+		// Print background
 		SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
 
+		// Show our hero
 		hero->apply();
 
-		// Print fps
-		sprintf(fps_msg, "%d FPS", last_fps);
-		message = TTF_RenderText_Solid(font, fps_msg, textColor);
-		SDL_BlitSurface(message, 0, screen, 0);
-		SDL_FreeSurface(message);
+		if(show_fps) {
+			// Print fps
+			sprintf(fps_msg, "%d FPS", last_fps);
+			message = TTF_RenderText_Solid(font, fps_msg, textColor);
+			SDL_BlitSurface(message, 0, screen, 0);
+			SDL_FreeSurface(message);
+		}
 
 		if(SDL_Flip(screen) == -1) {
 			fprintf(stderr, "Could not flip screen buffer\n");
