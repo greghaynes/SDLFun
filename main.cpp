@@ -10,6 +10,7 @@
 #define FRAMES_PER_SECOND 60
 
 static SDL_Surface *screen;
+static SDL_Surface *background;
 
 static int ctr_w = WIDTH / 2;
 static int ctr_h = HEIGHT / 2;
@@ -181,6 +182,7 @@ void init_video(void) {
 		fprintf(stderr, "Unable to set 800x600 video: %s\n", SDL_GetError());
 		exit(1);
 	}
+
 }
 
 void init_chars(void) {
@@ -203,17 +205,32 @@ int main(int argc, char **argv) {
 	atexit(SDL_Quit);
 
 	init_video();
+
+	if(TTF_Init() == -1) {
+		fprintf(stderr, "Could not initialize ttf\n");
+		exit(1);
+	}
+
 	init_chars();
 	hero->apply();
 
 	TTF_Font *font = NULL;
-	font = TTF_OpenFont( "lazy.ttf", 28 );
-	SDL_Color textColor = { 255, 255, 255 };
+	font = TTF_OpenFont( "data/fonts/UniversElse-Regular.ttf", 28 );
+	if(!font) {
+		fprintf(stderr, "Could not open ttf font\n");
+		exit(1);
+	}
+
+	SDL_Color textColor = { 0, 255, 255, 0 };
+	char fps_msg[10];
+
+	int last_fps = 0;
 
 	// Main loop
 	SDL_Event event;
 	bool do_quit = false;
 	fps_update.start();
+	SDL_Surface *message;
 	while(!do_quit) {
 		fps.start();
 
@@ -228,6 +245,17 @@ int main(int argc, char **argv) {
 			}
 		}
 
+		
+		SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
+
+		hero->apply();
+
+		// Print fps
+		sprintf(fps_msg, "%d FPS", last_fps);
+		message = TTF_RenderText_Solid(font, fps_msg, textColor);
+		SDL_BlitSurface(message, 0, screen, 0);
+		SDL_FreeSurface(message);
+
 		if(SDL_Flip(screen) == -1) {
 			fprintf(stderr, "Could not flip screen buffer\n");
 			exit(1);
@@ -240,6 +268,7 @@ int main(int argc, char **argv) {
 			caption << "Average Frames Per Second: " << fps_frame;
 			SDL_WM_SetCaption( caption.str().c_str(), NULL );
 			fps_update.start();
+			last_fps = fps_frame;
 			fps_frame = 0;
 		}
 
