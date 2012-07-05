@@ -235,7 +235,7 @@ int main(int argc, char **argv) {
 
 		fps_frame++;
 
-		if(fps_update.get_ticks() > 1000) {
+		if(fps_update.get_ticks() >= 1000) {
 			std::stringstream caption;
 			caption << "Average Frames Per Second: " << fps_frame;
 			SDL_WM_SetCaption( caption.str().c_str(), NULL );
@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
 			fps_frame = 0;
 		}
 
-		if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND) {
+		if(fps.get_ticks() <= 1000 / FRAMES_PER_SECOND) {
 			SDL_Delay(( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks());
 		}
 	}
