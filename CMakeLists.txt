@@ -4,7 +4,8 @@ find_package(SDL_ttf REQUIRED)
 
 set(SDLFun_SRCS
 	main.cpp
-	timer.cpp)
+	timer.cpp
+	character.cpp)
 
 include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
 

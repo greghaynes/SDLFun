@@ -6,6 +6,7 @@
 #include <SDL/SDL_ttf.h>
 
 #include "timer.h"
+#include "character.h"
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -21,69 +22,11 @@ static Timer fps;
 static Timer fps_update;
 static int fps_frame;
 
-struct  SDL_Point {
-	int x;
-	int y;
-};
-
-class Character {
-	public:
-		Character();
-		~Character();
-
-		void loadBase(SDL_Surface *base, int x, int y, int width, int height);
-		const SDL_Point &pos(void) const;
-		void setPos(int x, int y);
-		void apply(void);
-
-	private:
-		SDL_Point m_pos; // Position of bottom left corner
-		SDL_Rect m_clip;
-		SDL_Surface *m_base;
-};
-
-Character::Character()
-	: m_base(0) {
-	m_clip.x = 0;
-	m_clip.y = 0;
-	m_clip.w = 0;
-	m_clip.h = 0;
-
-	m_pos.x = 0;
-	m_pos.y = 0;
-}
-
-Character::~Character() {
-	if(m_base)
-		SDL_FreeSurface(m_base);
-}
-
-void Character::loadBase(SDL_Surface *base, int x, int y,
-                         int width, int height) {
-	m_base = base;
-	m_clip.x = x;
-	m_clip.y = y;
-	m_clip.w = width;
-	m_clip.h = height;
-}
-
-const SDL_Point &Character::pos(void) const {
-	return m_pos;
-}
-
-void  Character::setPos(int x, int y) {
-	m_pos.x = x;
-	m_pos.y = y;
-}
-
-void Character::apply(void) {
-	SDL_Rect offset;
-	offset.x = m_pos.x;
-	offset.y = m_pos.y;
-	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
-}
-
 static Character *hero;
+
+SDL_Surface *get_screen(void) {
+	return screen;
+}
 
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination ) {
 	SDL_Rect offset;
