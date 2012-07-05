@@ -1,15 +1,93 @@
 #include <stdlib.h>
+#include <sstream>
 
 #include <SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 
 #define WIDTH 800
 #define HEIGHT 600
+#define FRAMES_PER_SECOND 60
 
 static SDL_Surface *screen;
 
 static int ctr_w = WIDTH / 2;
 static int ctr_h = HEIGHT / 2;
+
+class Timer {
+	public:
+		Timer();
+
+		void start();
+		void stop();
+		void pause();
+		void unpause();
+		int get_ticks();
+		bool is_started();
+		bool is_paused(); 
+
+	private:
+		int startTicks;
+		int pausedTicks;
+		bool paused;
+		bool started;
+};
+
+Timer::Timer() {
+	startTicks = 0;
+	pausedTicks = 0;
+	paused = false;
+	started = false;
+}
+
+void Timer::start() { 
+	started = true;
+	paused = false;
+	startTicks = SDL_GetTicks();
+}
+
+void Timer::stop() {
+	started = false;
+	paused = false;
+}
+
+int Timer::get_ticks() {
+	if( started == true ) {
+		if( paused == true ) {
+			return pausedTicks;
+		} else {
+			return SDL_GetTicks() - startTicks;
+		}
+	}
+	return 0;
+}
+
+void Timer::pause() {
+	if( ( started == true ) && ( paused == false ) ) {
+		paused = true;
+		pausedTicks = SDL_GetTicks() - startTicks;
+	}
+}
+
+void Timer::unpause() {
+	if( paused == true ) {
+		paused = false;
+		startTicks = SDL_GetTicks() - pausedTicks;
+		pausedTicks = 0;
+	}
+}
+
+bool Timer::is_started() {
+	return started;
+}
+
+bool Timer::is_paused() {
+	return paused;
+}
+
+static Timer fps;
+static Timer fps_update;
+static int fps_frame;
 
 struct  SDL_Point {
 	int x;
@@ -75,6 +153,12 @@ void Character::apply(void) {
 
 static Character *hero;
 
+void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination ) {
+	SDL_Rect offset;
+	offset.x = x;
+	offset.y = y;
+}
+
 SDL_Surface *load_image(const char *path) {
 	SDL_Surface *loadedImage;
 	SDL_Surface *optimizedImage;
@@ -122,24 +206,46 @@ int main(int argc, char **argv) {
 	init_chars();
 	hero->apply();
 
+	TTF_Font *font = NULL;
+	font = TTF_OpenFont( "lazy.ttf", 28 );
+	SDL_Color textColor = { 255, 255, 255 };
+
+	// Main loop
 	SDL_Event event;
 	bool do_quit = false;
+	fps_update.start();
 	while(!do_quit) {
+		fps.start();
+
+		while (SDL_PollEvent(&event)) {
+			switch(event.type) {
+				case SDL_KEYDOWN:
+					printf("The %s key was pressed!\n",
+						SDL_GetKeyName(event.key.keysym.sym));
+					break;
+				case SDL_QUIT:
+					do_quit = true;
+			}
+		}
+
 		if(SDL_Flip(screen) == -1) {
 			fprintf(stderr, "Could not flip screen buffer\n");
 			exit(1);
 		}
-		SDL_WaitEvent(&event);
 
-		switch(event.type) {
-			case SDL_KEYDOWN:
-				printf("The %s key was pressed!\n",
-					SDL_GetKeyName(event.key.keysym.sym));
-				break;
-			case SDL_QUIT:
-				do_quit = true;
+		fps_frame++;
+
+		if(fps_update.get_ticks() > 1000) {
+			std::stringstream caption;
+			caption << "Average Frames Per Second: " << fps_frame;
+			SDL_WM_SetCaption( caption.str().c_str(), NULL );
+			fps_update.start();
+			fps_frame = 0;
 		}
 
+		if(fps.get_ticks() < 1000 / FRAMES_PER_SECOND) {
+			SDL_Delay(( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks());
+		}
 	}
 
 	SDL_FreeSurface(screen);
