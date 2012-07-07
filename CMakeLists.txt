@@ -3,11 +3,12 @@ find_package(SDL_image REQUIRED)
 find_package(SDL_ttf REQUIRED)
 
 set(SDLFun_SRCS
-	main.cpp
-	timer.cpp
-	character.cpp
-	position.cpp
-	velocity.cpp)
+	src/main.cpp
+	src/timer.cpp
+	src/character.cpp
+	src/position.cpp
+	src/velocity.cpp
+	src/map.cpp)
 
 include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
 

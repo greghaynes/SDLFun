@@ -8,15 +8,15 @@
 #include "timer.h"
 #include "character.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
 #define FRAMES_PER_SECOND 60
 
 static SDL_Surface *screen;
 static SDL_Surface *background;
 
-static int ctr_w = WIDTH / 2;
-static int ctr_h = HEIGHT / 2;
+static int ctr_w = SCREEN_WIDTH / 2;
+static int ctr_h = SCREEN_HEIGHT / 2;
 
 static Timer fps;
 static Timer fps_update;
@@ -47,7 +47,7 @@ SDL_Surface *load_image(const char *path) {
 void init_video(void) {
 	if(screen)
 		SDL_FreeSurface(screen);
-	screen = SDL_SetVideoMode(WIDTH, HEIGHT, 16, SDL_SWSURFACE);
+	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, SDL_SWSURFACE);
 	if(!screen) {
 		fprintf(stderr, "Unable to set 800x600 video: %s\n", SDL_GetError());
 		exit(1);
@@ -67,6 +67,22 @@ void init_chars(void) {
 	hero->loadBase(loaded, 2, 32, 13, 16);
 }
 
+TTF_Font *font = NULL;
+SDL_Color textColor = { 0, 255, 0, 127 };
+
+void init_fonts(void) {
+	if(TTF_Init() == -1) {
+		fprintf(stderr, "Could not initialize ttf\n");
+		exit(1);
+	}
+
+	font = TTF_OpenFont( "data/fonts/UniversElse-Regular.ttf", 18 );
+	if(!font) {
+		fprintf(stderr, "Could not open ttf font\n");
+		exit(1);
+	}
+}
+
 int main(int argc, char **argv) {
 	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
 		fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
@@ -75,25 +91,10 @@ int main(int argc, char **argv) {
 	atexit(SDL_Quit);
 
 	init_video();
-
-	if(TTF_Init() == -1) {
-		fprintf(stderr, "Could not initialize ttf\n");
-		exit(1);
-	}
-
+	init_fonts();
 	init_chars();
 
-	TTF_Font *font = NULL;
-	font = TTF_OpenFont( "data/fonts/UniversElse-Regular.ttf", 28 );
-	if(!font) {
-		fprintf(stderr, "Could not open ttf font\n");
-		exit(1);
-	}
 
-	SDL_Color textColor = { 0, 255, 255, 0 };
-	char fps_msg[10];
-
-	int last_fps = 0;
 
 	// Main loop
 	SDL_Event event;
@@ -101,6 +102,9 @@ int main(int argc, char **argv) {
 	fps_update.start();
 	SDL_Surface *message;
 	bool show_fps = false;
+	char fps_msg[10];
+	int last_fps = 0;
+	bool fps_limit = true;
 	while(!do_quit) {
 		fps.start();
 
@@ -136,7 +140,7 @@ int main(int argc, char **argv) {
 		SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
 
 		// Show our hero
-		hero->apply(screen);
+		hero->draw(screen);
 
 		if(show_fps) {
 			// Print fps
@@ -162,7 +166,7 @@ int main(int argc, char **argv) {
 			fps_frame = 0;
 		}
 
-		if(fps.get_ticks() <= 1000 / FRAMES_PER_SECOND) {
+		if(fps_limit && fps.get_ticks() <= 1000 / FRAMES_PER_SECOND) {
 			SDL_Delay(( 1000 / FRAMES_PER_SECOND ) - fps.get_ticks());
 		}
 	}

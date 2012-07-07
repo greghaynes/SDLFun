@@ -49,7 +49,7 @@ void Character::update(void) {
 	update_timer.start();
 }
 
-void Character::apply(SDL_Surface *screen) {
+void Character::draw(SDL_Surface *screen) {
 	SDL_Rect offset;
 	offset.x = m_pos.x();
 	offset.y = m_pos.y();
