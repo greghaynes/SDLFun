@@ -24,10 +24,6 @@ static int fps_frame;
 
 static Character *hero;
 
-SDL_Surface *get_screen(void) {
-	return screen;
-}
-
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination ) {
 	SDL_Rect offset;
 	offset.x = x;
@@ -86,7 +82,6 @@ int main(int argc, char **argv) {
 	}
 
 	init_chars();
-	hero->apply();
 
 	TTF_Font *font = NULL;
 	font = TTF_OpenFont( "data/fonts/UniversElse-Regular.ttf", 28 );
@@ -118,6 +113,9 @@ int main(int argc, char **argv) {
 						case SDLK_f:
 							show_fps = !show_fps;
 							break;
+						case SDLK_q:
+							do_quit = true;
+							break;
 					}
 					break;
 				case SDL_QUIT:
@@ -130,7 +128,7 @@ int main(int argc, char **argv) {
 		SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
 
 		// Show our hero
-		hero->apply();
+		hero->apply(screen);
 
 		if(show_fps) {
 			// Print fps

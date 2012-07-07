@@ -13,7 +13,7 @@ class Character {
 		void loadBase(SDL_Surface *base, int x, int y, int width, int height);
 		const SDL_Point &pos(void) const;
 		void setPos(int x, int y);
-		void apply(void);
+		void apply(SDL_Surface *screen);
 
 	private:
 		SDL_Point m_pos; // Position of bottom left corner

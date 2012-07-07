@@ -35,9 +35,9 @@ void  Character::setPos(int x, int y) {
 	m_pos.y = y;
 }
 
-void Character::apply(void) {
+void Character::apply(SDL_Surface *screen) {
 	SDL_Rect offset;
 	offset.x = m_pos.x;
 	offset.y = m_pos.y;
-	SDL_BlitSurface(m_base, &m_clip, get_screen(), &offset);
+	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
 }
