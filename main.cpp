@@ -56,7 +56,7 @@ void init_video(void) {
 }
 
 void init_chars(void) {
-	SDL_Surface *loaded = load_image("data/sheet_1.png");
+	SDL_Surface *loaded = load_image("data/sprites/sheet_1.png");
 	if(!loaded) {
 		fprintf(stderr, "Could not load sprite flie: %s\n", SDL_GetError());
 		exit(1);
@@ -104,6 +104,8 @@ int main(int argc, char **argv) {
 	while(!do_quit) {
 		fps.start();
 
+		hero->update();
+
 		while (SDL_PollEvent(&event)) {
 			switch(event.type) {
 				case SDL_KEYDOWN:
@@ -115,6 +117,12 @@ int main(int argc, char **argv) {
 							break;
 						case SDLK_q:
 							do_quit = true;
+							break;
+						case SDLK_UP:
+							hero->setVel(hero->vel().x(), hero->vel().y() - .05);
+							break;
+						case SDLK_DOWN:
+							hero->setVel(hero->vel().x(), hero->vel().y() + .05);
 							break;
 					}
 					break;

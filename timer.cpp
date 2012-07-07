@@ -1,5 +1,7 @@
 #include "timer.h"
 
+#include <SDL.h>
+
 Timer::Timer() {
 	startTicks = 0;
 	pausedTicks = 0;

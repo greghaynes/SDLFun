@@ -30,9 +30,23 @@ const Position &Character::pos(void) const {
 	return m_pos;
 }
 
-void  Character::setPos(float x, float y) {
+void Character::setPos(float x, float y) {
 	m_pos.setX(x);
 	m_pos.setY(y);
+}
+
+const Velocity &Character::vel(void) const {
+	return m_vel;
+}
+
+void Character::setVel(float x, float y) {
+	m_vel.setX(x);
+	m_vel.setY(y);
+}
+
+void Character::update(void) {
+	m_vel.updatePos(m_pos, update_timer.get_ticks());
+	update_timer.start();
 }
 
 void Character::apply(SDL_Surface *screen) {
