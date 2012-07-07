@@ -8,8 +8,8 @@ Character::Character()
 	m_clip.w = 0;
 	m_clip.h = 0;
 
-	m_pos.x = 0;
-	m_pos.y = 0;
+	m_pos.setX(0);
+	m_pos.setY(0);
 }
 
 Character::~Character() {
@@ -26,18 +26,18 @@ void Character::loadBase(SDL_Surface *base, int x, int y,
 	m_clip.h = height;
 }
 
-const SDL_Point &Character::pos(void) const {
+const Position &Character::pos(void) const {
 	return m_pos;
 }
 
-void  Character::setPos(int x, int y) {
-	m_pos.x = x;
-	m_pos.y = y;
+void  Character::setPos(float x, float y) {
+	m_pos.setX(x);
+	m_pos.setY(y);
 }
 
 void Character::apply(SDL_Surface *screen) {
 	SDL_Rect offset;
-	offset.x = m_pos.x;
-	offset.y = m_pos.y;
+	offset.x = m_pos.x();
+	offset.y = m_pos.y();
 	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
 }
