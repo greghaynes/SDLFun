@@ -38,8 +38,33 @@ void Map::draw(Engine &engine) {
 	SDL_Rect *camera = engine.camera();
 	int bg_x = camera->x % camera->w;
 	int bg_y = camera->y % camera->h;
+
 	SDL_Rect offset;
 	offset.x = bg_x;
 	offset.y = bg_y;
-	SDL_BlitSurface(background, camera, engine.screen(), &offset);
+	SDL_BlitSurface(background, engine.window(), engine.screen(), &offset);
+
+	offset.x = bg_x;
+	if(camera->y < 0)
+		offset.y = bg_y + background->h;
+	else
+		offset.y = bg_y - background->h;
+	SDL_BlitSurface(background, engine.window(), engine.screen(), &offset);
+
+	if(camera->x < 0)
+		offset.x = bg_x + background->w;
+	else
+		offset.x = bg_x - background->w;
+	offset.y = bg_y;
+	SDL_BlitSurface(background, engine.window(), engine.screen(), &offset);
+
+	if(camera->x < 0)
+		offset.x = bg_x + background->w;
+	else
+		offset.x = bg_x - background->w;
+	if(camera->y < 0)
+		offset.y = bg_y + background->h;
+	else
+		offset.y = bg_y - background->h;
+	SDL_BlitSurface(background, engine.window(), engine.screen(), &offset);
 }

@@ -23,6 +23,7 @@ class Engine {
 		SDL_Surface *screen(void);
 		SDL_Rect *camera(void);
 		SDL_Rect *centered(void);
+		SDL_Rect *window(void);
 
 		void setCameraPos(const Position &pos);
 
@@ -45,6 +46,7 @@ class Engine {
 		SDL_Rect m_centered;
 		SDL_Surface *m_background;
 		Map *m_map;
+		SDL_Rect m_window;
 
 };
 

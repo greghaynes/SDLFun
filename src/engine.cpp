@@ -27,6 +27,11 @@ Engine::Engine(void)
 	m_centered.y = SCREEN_HEIGHT / 2;
 	m_centered.w = SCREEN_WIDTH;
 	m_centered.h = SCREEN_HEIGHT;
+
+	m_window.x = 0;
+	m_window.y = 0;
+	m_window.w = SCREEN_WIDTH;
+	m_window.h = SCREEN_HEIGHT;
 }
 
 Engine::~Engine(void) {
@@ -97,13 +102,17 @@ SDL_Rect *Engine::centered(void) {
 	return &m_centered;
 }
 
+SDL_Rect *Engine::window(void) {
+	return &m_window;
+}
+
 void Engine::setCameraPos(const Position &pos) {
 	m_camera.x = pos.x();
 	m_camera.y = pos.y();
 }
 
 bool Engine::initVideo(void) {
-	m_screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT,
+	m_screen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT,
 	                            16, SDL_SWSURFACE);
 	if(!m_screen) {
 		fprintf(stderr, "Could not init screen\n");
@@ -161,6 +170,18 @@ void Engine::handleEvent(SDL_Event &event) {
 			switch(event.key.keysym.sym) {
 				case SDLK_q:
 					stop();
+					break;
+				case SDLK_UP:
+					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() + .05);
+					break;
+				case SDLK_DOWN:
+					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() - .05);
+					break;
+				case SDLK_LEFT:
+					m_hero->setVel(m_hero->vel().x() + .05, m_hero->vel().y());
+					break;
+				case SDLK_RIGHT:
+					m_hero->setVel(m_hero->vel().x() - .05, m_hero->vel().y());
 					break;
 			}
 			break;
