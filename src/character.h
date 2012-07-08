@@ -25,6 +25,9 @@ class Character {
 		SDL_Surface *surface(void);
 		SDL_Rect *clip(void);
 
+		int width(void) const;
+		int height(void) const;
+
 	protected:
 		virtual void onUpdate(Engine &engine);
 

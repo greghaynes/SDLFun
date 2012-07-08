@@ -24,6 +24,7 @@ class Engine {
 		SDL_Rect *camera(void);
 		SDL_Rect *centered(void);
 		SDL_Rect *window(void);
+		Map &map(void);
 
 	private:
 		bool initVideo(void);

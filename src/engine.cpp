@@ -107,6 +107,10 @@ SDL_Rect *Engine::window(void) {
 	return &m_window;
 }
 
+Map &Engine::map(void) {
+	return *m_map;
+}
+
 bool Engine::initVideo(void) {
 	m_screen = SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT,
 	                            16, SDL_SWSURFACE);
