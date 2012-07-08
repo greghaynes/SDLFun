@@ -12,6 +12,9 @@ class Hero
 
 		void draw(Engine &engine);
 
+	protected:
+		void onUpdate(Engine &engine);
+
 };
 
 #endif

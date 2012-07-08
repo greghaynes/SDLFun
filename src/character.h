@@ -19,10 +19,14 @@ class Character {
 		const Velocity &vel(void) const;
 		void setVel(float x, float y);
 
-		void update(void);
+		void update(Engine &engine);
 		virtual void draw(Engine &engine);
+
 		SDL_Surface *surface(void);
 		SDL_Rect *clip(void);
+
+	protected:
+		virtual void onUpdate(Engine &engine);
 
 	private:
 		Position m_pos;

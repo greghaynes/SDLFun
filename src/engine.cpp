@@ -1,6 +1,7 @@
 #include "engine.h"
 #include "settings.h"
 #include "hero.h"
+#include "position.h"
 
 #include <SDL/SDL_image.h>
 
@@ -62,11 +63,13 @@ void Engine::start(void) {
 	m_is_running = true;
 	SDL_Event event;
 	while(m_is_running) {
-		m_hero->draw(*this);
-
 		while(SDL_PollEvent(&event)) {
 			handleEvent(event);
 		}
+
+		m_hero->update(*this);
+
+		m_hero->draw(*this);
 
 		SDL_Flip(screen());
 	}
@@ -86,6 +89,11 @@ SDL_Rect *Engine::camera(void) {
 
 SDL_Rect *Engine::centered(void) {
 	return &m_centered;
+}
+
+void Engine::setCameraPos(const Position &pos) {
+	m_camera.x = pos.x();
+	m_camera.y = pos.y();
 }
 
 bool Engine::initVideo(void) {

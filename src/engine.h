@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 class Hero;
+class Position;
 
 #include <SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -21,6 +22,8 @@ class Engine {
 		SDL_Surface *screen(void);
 		SDL_Rect *camera(void);
 		SDL_Rect *centered(void);
+
+		void setCameraPos(const Position &pos);
 
 	private:
 		bool initVideo(void);

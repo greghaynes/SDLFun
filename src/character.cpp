@@ -30,9 +30,10 @@ void Character::setVel(float x, float y) {
 	m_vel.setY(y);
 }
 
-void Character::update(void) {
+void Character::update(Engine &engine) {
 	m_vel.updatePos(m_pos, update_timer.get_ticks());
 	update_timer.start();
+	onUpdate(engine);
 }
 
 void Character::draw(Engine &engine) {
@@ -44,5 +45,8 @@ SDL_Surface *Character::surface(void) {
 
 SDL_Rect *Character::clip(void) {
 	return &m_clip;
+}
+
+void Character::onUpdate(Engine &engine) {
 }
 
