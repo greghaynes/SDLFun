@@ -1,27 +1,15 @@
 #include "character.h"
-#include "main.h"
+#include "engine.h"
 
-Character::Character()
-	: m_base(0) {
-	m_clip.x = 0;
-	m_clip.y = 0;
-	m_clip.w = 0;
-	m_clip.h = 0;
-
-	m_pos.setX(0);
-	m_pos.setY(0);
+Character::Character(SDL_Surface *spritesheet, const SDL_Rect &clip)
+	: m_spritesheet(spritesheet) {
+	m_clip.x = clip.x;
+	m_clip.y = clip.y;
+	m_clip.w = clip.w;
+	m_clip.h = clip.h;
 }
 
 Character::~Character() {
-}
-
-void Character::loadBase(SDL_Surface *base, int x, int y,
-                         int width, int height) {
-	m_base = base;
-	m_clip.x = x;
-	m_clip.y = y;
-	m_clip.w = width;
-	m_clip.h = height;
 }
 
 const Position &Character::pos(void) const {
@@ -47,15 +35,11 @@ void Character::update(void) {
 	update_timer.start();
 }
 
-void Character::draw(SDL_Surface *screen) {
-	SDL_Rect offset;
-	offset.x = m_pos.x();
-	offset.y = m_pos.y();
-	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
+void Character::draw(Engine &engine) {
 }
 
 SDL_Surface *Character::surface(void) {
-	return m_base;
+	return m_spritesheet;
 }
 
 SDL_Rect *Character::clip(void) {

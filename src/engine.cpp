@@ -1,5 +1,6 @@
 #include "engine.h"
 #include "settings.h"
+#include "hero.h"
 
 #include <SDL/SDL_image.h>
 
@@ -13,6 +14,15 @@ Engine::Engine(void)
 	, m_sys_font(0)
 	, m_spritesheet(0)
 	, m_hero(0) {
+	m_camera.x = 0;
+	m_camera.y = 0;
+	m_camera.w = 0;
+	m_camera.h = 0;
+
+	m_centered.x = SCREEN_WIDTH / 2;
+	m_centered.y = SCREEN_HEIGHT / 2;
+	m_centered.w = SCREEN_WIDTH;
+	m_centered.h = SCREEN_HEIGHT;
 }
 
 Engine::~Engine(void) {
@@ -50,13 +60,32 @@ void Engine::start(void) {
 	}
 
 	m_is_running = true;
+	SDL_Event event;
 	while(m_is_running) {
-			
+		m_hero->draw(*this);
+
+		while(SDL_PollEvent(&event)) {
+			handleEvent(event);
+		}
+
+		SDL_Flip(screen());
 	}
 }
 
 void Engine::stop(void) {
 	m_is_running = false;
+}
+
+SDL_Surface *Engine::screen(void) {
+	return m_screen;
+}
+
+SDL_Rect *Engine::camera(void) {
+	return &m_camera;
+}
+
+SDL_Rect *Engine::centered(void) {
+	return &m_centered;
 }
 
 bool Engine::initVideo(void) {
@@ -77,7 +106,8 @@ bool Engine::initCharacters(void) {
 		return false;
 	}
 
-	m_hero = new Hero();
+	SDL_Rect cliprect = { 0, 32, 16, 16 };
+	m_hero = new Hero(m_spritesheet, cliprect);
 
 	return true;
 }
@@ -99,6 +129,18 @@ bool Engine::initFonts(void) {
 	m_sys_font_color.b = 0;
 
 	return true;
+}
+
+void Engine::handleEvent(SDL_Event &event) {
+	switch(event.type) {
+		case SDL_KEYDOWN:
+			switch(event.key.keysym.sym) {
+				case SDLK_q:
+					stop();
+					break;
+			}
+			break;
+	}
 }
 
 SDL_Surface *Engine::loadImage(const char *path) {

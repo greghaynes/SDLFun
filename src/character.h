@@ -7,19 +7,20 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+class Engine;
+
 class Character {
 	public:
-		Character();
+		Character(SDL_Surface *spritesheet, const SDL_Rect &clip);
 		~Character();
 
-		void loadBase(SDL_Surface *base, int x, int y, int width, int height);
 		const Position &pos(void) const;
 		void setPos(float x, float y);
 		const Velocity &vel(void) const;
 		void setVel(float x, float y);
 
 		void update(void);
-		virtual void draw(SDL_Surface *screen);
+		virtual void draw(Engine &engine);
 		SDL_Surface *surface(void);
 		SDL_Rect *clip(void);
 
@@ -27,7 +28,7 @@ class Character {
 		Position m_pos;
 		Velocity m_vel;
 		SDL_Rect m_clip;
-		SDL_Surface *m_base;
+		SDL_Surface *m_spritesheet;
 
 		Timer update_timer;
 };

@@ -2,14 +2,15 @@
 #define HERO_H
 
 #include "character.h"
+#include "engine.h"
 
 class Hero 
 	: public Character {
 
 	public:
-		Hero();
+		Hero(SDL_Surface *spritesheet, const SDL_Rect &clip);
 
-		void draw(SDL_Surface *screen);
+		void draw(Engine &engine);
 
 };
 
