@@ -127,6 +127,7 @@ bool Engine::initCharacters(void) {
 
 	SDL_Rect cliprect = { 0, 32, 16, 16 };
 	m_hero = new Hero(m_spritesheet, cliprect);
+	m_hero->setPos(centered()->x, centered()->y);
 
 	return true;
 }
@@ -199,8 +200,8 @@ SDL_Surface *Engine::loadImage(const char *path) {
 }
 
 void Engine::centerCamera(void) {
-	m_camera.x = m_hero->pos().x() + centered()->x;
-	m_camera.y = m_hero->pos().y() + centered()->y;
+	m_camera.x = m_hero->pos().x() - centered()->x;
+	m_camera.y = m_hero->pos().y() - centered()->y;
 
 	if(m_camera.x + m_window.w > m_map->width())
 		m_camera.x = m_map->width() - m_window.w;
