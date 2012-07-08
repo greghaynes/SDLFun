@@ -32,6 +32,7 @@ class Engine {
 		SDL_Color m_sys_font_color;
 		SDL_Surface *m_spritesheet;
 		Hero *m_hero;
+		SDL_Rect *camera;
 
 };
 

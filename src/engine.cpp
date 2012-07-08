@@ -51,7 +51,7 @@ void Engine::start(void) {
 
 	m_is_running = true;
 	while(m_is_running) {
-		
+			
 	}
 }
 
