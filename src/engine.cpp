@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "hero.h"
 #include "position.h"
+#include "map.h"
 
 #include <SDL/SDL_image.h>
 
@@ -14,11 +15,13 @@ Engine::Engine(void)
 	, m_screen(0)
 	, m_sys_font(0)
 	, m_spritesheet(0)
-	, m_hero(0) {
+	, m_hero(0)
+	, m_map(0)
+	, m_background(0) {
 	m_camera.x = 0;
 	m_camera.y = 0;
-	m_camera.w = 0;
-	m_camera.h = 0;
+	m_camera.w = SCREEN_WIDTH;
+	m_camera.h = SCREEN_HEIGHT;
 
 	m_centered.x = SCREEN_WIDTH / 2;
 	m_centered.y = SCREEN_HEIGHT / 2;
@@ -30,7 +33,9 @@ Engine::~Engine(void) {
 	if(m_screen) SDL_FreeSurface(m_screen);
 	if(m_sys_font) TTF_CloseFont(m_sys_font);
 	if(m_spritesheet) SDL_FreeSurface(m_spritesheet);
+	if(m_background) SDL_FreeSurface(m_background);
 	if(m_hero) delete m_hero;
+	if(m_map) delete m_map;
 }
 
 bool Engine::init(void) {
@@ -44,7 +49,7 @@ bool Engine::init(void) {
 		return false;
 	}
 
-	if(initVideo() && initFonts() && initCharacters())
+	if(initVideo() && initFonts() && initCharacters() && initWorld())
 		m_is_init = true;
 
 	return m_is_init;
@@ -69,6 +74,7 @@ void Engine::start(void) {
 
 		m_hero->update(*this);
 
+		m_map->draw(*this);
 		m_hero->draw(*this);
 
 		SDL_Flip(screen());
@@ -123,7 +129,7 @@ bool Engine::initCharacters(void) {
 bool Engine::initFonts(void) {
 	if(TTF_Init() == -1) {
 		fprintf(stderr, "Could not initialize ttf\n");
-		exit(1);
+		return false;
 	}
 
 	m_sys_font = TTF_OpenFont(SYS_FONT, SYS_FONT_SIZE);
@@ -136,6 +142,16 @@ bool Engine::initFonts(void) {
 	m_sys_font_color.g = 200;
 	m_sys_font_color.b = 0;
 
+	return true;
+}
+
+bool Engine::initWorld(void) {
+	m_background = loadImage("data/images/background.xcf");
+	if(!m_background) {
+		fprintf(stderr, "Could not load background image\n");
+		return false;
+	}
+	m_map = new Map(1000, 1000, m_background);
 	return true;
 }
 

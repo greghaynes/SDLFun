@@ -3,6 +3,7 @@
 
 class Hero;
 class Position;
+class Map;
 
 #include <SDL.h>
 #include <SDL/SDL_ttf.h>
@@ -29,6 +30,7 @@ class Engine {
 		bool initVideo(void);
 		bool initCharacters(void);
 		bool initFonts(void);
+		bool initWorld(void);
 		void handleEvent(SDL_Event &event);
 		SDL_Surface *loadImage(const char *path);
 
@@ -41,6 +43,8 @@ class Engine {
 		Hero *m_hero;
 		SDL_Rect m_camera;
 		SDL_Rect m_centered;
+		SDL_Surface *m_background;
+		Map *m_map;
 
 };
 

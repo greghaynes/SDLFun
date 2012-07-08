@@ -5,6 +5,8 @@
 
 #include <SDL.h>
 
+class Engine;
+
 class Map {
 
 	public:
@@ -14,7 +16,7 @@ class Map {
 		int width(void) const;
 		int height(void) const;
 		const Tile *at(int x, int y) const;
-		void drawAtOffset(int x, int y, SDL_Surface *screen);
+		void draw(Engine &engine);
 
 	private:
 		Tile ***m_tiles;

@@ -1,4 +1,5 @@
 #include "map.h"
+#include "engine.h"
 
 #include <string.h>
 
@@ -33,18 +34,12 @@ const Tile *Map::at(int x, int y) const {
 	return m_tiles[x][y];
 }
 
-void Map::drawAtOffset(int x, int y, SDL_Surface *screen) {
+void Map::draw(Engine &engine) {
+	SDL_Rect *camera = engine.camera();
+	int bg_x = camera->x % camera->w;
+	int bg_y = camera->y % camera->h;
 	SDL_Rect offset;
-	int off_y = (y%480) + (480 / 2);
-	int off_x = x + (640 / 2);
-	offset.x = off_x;
-	offset.y = off_y;
-	SDL_BlitSurface(background, 0, screen, &offset);
-	offset.y = off_y - background->h;
-	offset.x = off_x;
-	SDL_BlitSurface(background, 0, screen, &offset);
-	offset.y = off_y + background->h;
-	offset.x = off_x;
-	SDL_BlitSurface(background, 0, screen, &offset);
+	offset.x = bg_x;
+	offset.y = bg_y;
+	SDL_BlitSurface(background, camera, engine.screen(), &offset);
 }
-
