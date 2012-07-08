@@ -7,94 +7,25 @@
 
 #include "timer.h"
 #include "character.h"
-
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-#define FRAMES_PER_SECOND 60
-
-static SDL_Surface *screen;
-static SDL_Surface *background;
-
-static int ctr_w = SCREEN_WIDTH / 2;
-static int ctr_h = SCREEN_HEIGHT / 2;
+#include "hero.h"
+#include "map.h"
+#include "engine.h"
 
 static Timer fps;
 static Timer fps_update;
 static int fps_frame;
 
-static Character *hero;
-
-void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination ) {
-	SDL_Rect offset;
-	offset.x = x;
-	offset.y = y;
-}
-
-SDL_Surface *load_image(const char *path) {
-	SDL_Surface *loadedImage;
-	SDL_Surface *optimizedImage;
-
-	loadedImage = IMG_Load(path);
-	if(!loadedImage)
-		return 0;
-
-	optimizedImage = SDL_DisplayFormat(loadedImage);
-
-	SDL_FreeSurface(loadedImage);
-	return optimizedImage;
-}
-
-void init_video(void) {
-	if(screen)
-		SDL_FreeSurface(screen);
-	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16, SDL_SWSURFACE);
-	if(!screen) {
-		fprintf(stderr, "Unable to set 800x600 video: %s\n", SDL_GetError());
-		exit(1);
-	}
-
-}
-
-void init_chars(void) {
-	SDL_Surface *loaded = load_image("data/sprites/sheet_1.png");
-	if(!loaded) {
-		fprintf(stderr, "Could not load sprite flie: %s\n", SDL_GetError());
-		exit(1);
-	}
-
-	hero = new Character();
-	hero->setPos(ctr_w - 6, ctr_h);
-	hero->loadBase(loaded, 2, 32, 13, 16);
-}
-
-TTF_Font *font = NULL;
-SDL_Color textColor = { 0, 255, 0, 127 };
-
-void init_fonts(void) {
-	if(TTF_Init() == -1) {
-		fprintf(stderr, "Could not initialize ttf\n");
-		exit(1);
-	}
-
-	font = TTF_OpenFont( "data/fonts/UniversElse-Regular.ttf", 18 );
-	if(!font) {
-		fprintf(stderr, "Could not open ttf font\n");
-		exit(1);
-	}
-}
-
 int main(int argc, char **argv) {
-	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
-		fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
+	Engine e;
+	if(!e.init()) {
+		fprintf(stderr, "Could not start engine, exiting.\n");
 		exit(1);
 	}
-	atexit(SDL_Quit);
 
-	init_video();
-	init_fonts();
-	init_chars();
-
-
+	e.start();
+/*
+	SDL_Surface *bg = load_image("data/images/background.xcf");
+	Map map(1000, 1024, bg);
 
 	// Main loop
 	SDL_Event event;
@@ -105,6 +36,7 @@ int main(int argc, char **argv) {
 	char fps_msg[10];
 	int last_fps = 0;
 	bool fps_limit = true;
+
 	while(!do_quit) {
 		fps.start();
 
@@ -128,6 +60,12 @@ int main(int argc, char **argv) {
 						case SDLK_DOWN:
 							hero->setVel(hero->vel().x(), hero->vel().y() + .05);
 							break;
+						case SDLK_LEFT:
+							hero->setVel(hero->vel().x() - .05, hero->vel().y());
+							break;
+						case SDLK_RIGHT:
+							hero->setVel(hero->vel().x() + .05, hero->vel().y());
+							break;
 					}
 					break;
 				case SDL_QUIT:
@@ -135,9 +73,8 @@ int main(int argc, char **argv) {
 			}
 		}
 
-		
 		// Print background
-		SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
+		map.drawAtOffset(-hero->pos().x(), -hero->pos().y(), screen);
 
 		// Show our hero
 		hero->draw(screen);
@@ -173,5 +110,6 @@ int main(int argc, char **argv) {
 
 	SDL_FreeSurface(screen);
 	SDL_Quit();
+*/
 }
 

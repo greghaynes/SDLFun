@@ -6,9 +6,11 @@ set(SDLFun_SRCS
 	src/main.cpp
 	src/timer.cpp
 	src/character.cpp
+	src/hero.cpp
 	src/position.cpp
 	src/velocity.cpp
-	src/map.cpp)
+	src/map.cpp
+	src/engine.cpp)
 
 include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
 

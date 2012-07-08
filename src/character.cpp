@@ -13,8 +13,6 @@ Character::Character()
 }
 
 Character::~Character() {
-	if(m_base)
-		SDL_FreeSurface(m_base);
 }
 
 void Character::loadBase(SDL_Surface *base, int x, int y,
@@ -55,3 +53,12 @@ void Character::draw(SDL_Surface *screen) {
 	offset.y = m_pos.y();
 	SDL_BlitSurface(m_base, &m_clip, screen, &offset);
 }
+
+SDL_Surface *Character::surface(void) {
+	return m_base;
+}
+
+SDL_Rect *Character::clip(void) {
+	return &m_clip;
+}
+

@@ -3,20 +3,25 @@
 
 #include "tile.h"
 
+#include <SDL.h>
+
 class Map {
 
 	public:
-		Map(int width, int height);
+		Map(int width, int height, SDL_Surface *background);
 		~Map();
 
 		int width(void) const;
 		int height(void) const;
 		const Tile *at(int x, int y) const;
+		void drawAtOffset(int x, int y, SDL_Surface *screen);
 
 	private:
 		Tile ***m_tiles;
 		int m_width;
 		int m_height;
+
+		SDL_Surface *background;
 
 };
 

@@ -19,7 +19,9 @@ class Character {
 		void setVel(float x, float y);
 
 		void update(void);
-		void draw(SDL_Surface *screen);
+		virtual void draw(SDL_Surface *screen);
+		SDL_Surface *surface(void);
+		SDL_Rect *clip(void);
 
 	private:
 		Position m_pos;
