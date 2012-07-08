@@ -37,6 +37,11 @@ void Character::update(Engine &engine) {
 }
 
 void Character::draw(Engine &engine) {
+	SDL_Rect offset;
+	offset.x = engine.camera()->x - pos().x();
+	offset.y = engine.camera()->y - pos().y();
+
+	SDL_BlitSurface(surface(), clip(), engine.screen(), &offset);
 }
 
 SDL_Surface *Character::surface(void) {

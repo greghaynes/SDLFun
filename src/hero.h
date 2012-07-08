@@ -10,11 +10,6 @@ class Hero
 	public:
 		Hero(SDL_Surface *spritesheet, const SDL_Rect &clip);
 
-		void draw(Engine &engine);
-
-	protected:
-		void onUpdate(Engine &engine);
-
 };
 
 #endif

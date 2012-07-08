@@ -25,8 +25,6 @@ class Engine {
 		SDL_Rect *centered(void);
 		SDL_Rect *window(void);
 
-		void setCameraPos(const Position &pos);
-
 	private:
 		bool initVideo(void);
 		bool initCharacters(void);
@@ -34,6 +32,7 @@ class Engine {
 		bool initWorld(void);
 		void handleEvent(SDL_Event &event);
 		SDL_Surface *loadImage(const char *path);
+		void centerCamera(void);
 
 		bool m_is_init;
 		bool m_is_running;

@@ -78,6 +78,7 @@ void Engine::start(void) {
 		}
 
 		m_hero->update(*this);
+		centerCamera();
 
 		m_map->draw(*this);
 		m_hero->draw(*this);
@@ -104,11 +105,6 @@ SDL_Rect *Engine::centered(void) {
 
 SDL_Rect *Engine::window(void) {
 	return &m_window;
-}
-
-void Engine::setCameraPos(const Position &pos) {
-	m_camera.x = pos.x();
-	m_camera.y = pos.y();
 }
 
 bool Engine::initVideo(void) {
@@ -200,5 +196,19 @@ SDL_Surface *Engine::loadImage(const char *path) {
 
 	SDL_FreeSurface(loadedImage);
 	return optimizedImage;
+}
+
+void Engine::centerCamera(void) {
+	m_camera.x = m_hero->pos().x() + centered()->x;
+	m_camera.y = m_hero->pos().y() + centered()->y;
+
+	if(m_camera.x + m_window.w > m_map->width())
+		m_camera.x = m_map->width() - m_window.w;
+	else if(m_camera.x < 0)
+		m_camera.x = 0;
+	if(m_camera.y + m_window.h > m_map->height())
+		m_camera.y = m_map->height() - m_window.h;
+	else if(m_camera.y < 0)
+		m_camera.y = 0;
 }
 
