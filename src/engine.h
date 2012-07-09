@@ -1,6 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include "timer.h"
+
 class Hero;
 class Position;
 class Map;
@@ -34,6 +36,7 @@ class Engine {
 		void handleEvent(SDL_Event &event);
 		SDL_Surface *loadImage(const char *path);
 		void centerCamera(void);
+		void handleFps(void);
 
 		bool m_is_init;
 		bool m_is_running;
@@ -47,6 +50,14 @@ class Engine {
 		SDL_Surface *m_background;
 		Map *m_map;
 		SDL_Rect m_window;
+
+		// FPS
+		Timer fps_timer;
+		Timer fps_update;
+		bool fps_show;
+		int fps_cnt;
+		char fps_str[10];
+		SDL_Surface *fps_surface;
 
 };
 

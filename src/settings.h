@@ -15,5 +15,7 @@
 #define TILE_WIDTH 27
 #define TILE_HEIGHT 27
 
+#define FPS_LIMIT 60
+
 #endif
 

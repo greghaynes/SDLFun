@@ -17,7 +17,10 @@ Engine::Engine(void)
 	, m_spritesheet(0)
 	, m_hero(0)
 	, m_map(0)
-	, m_background(0) {
+	, m_background(0)
+	, fps_show(false)
+	, fps_cnt(0)
+	, fps_surface(0) {
 	m_camera.x = 0;
 	m_camera.y = 0;
 	m_camera.w = SCREEN_WIDTH;
@@ -72,6 +75,8 @@ void Engine::start(void) {
 
 	m_is_running = true;
 	SDL_Event event;
+	fps_timer.start();
+	fps_update.start();
 	while(m_is_running) {
 		while(SDL_PollEvent(&event)) {
 			handleEvent(event);
@@ -82,6 +87,8 @@ void Engine::start(void) {
 
 		m_map->draw(*this);
 		m_hero->draw(*this);
+
+		handleFps();
 
 		SDL_Flip(screen());
 	}
@@ -192,6 +199,9 @@ void Engine::handleEvent(SDL_Event &event) {
 				case SDLK_RIGHT:
 					m_hero->setVel(m_hero->vel().x() + .05, m_hero->vel().y());
 					break;
+				case SDLK_f:
+					fps_show = !fps_show;
+					break;
 			}
 			break;
 	}
@@ -223,5 +233,34 @@ void Engine::centerCamera(void) {
 		m_camera.y = m_map->height() - m_window.h;
 	else if(m_camera.y < 0)
 		m_camera.y = 0;
+}
+
+void Engine::handleFps(void) {
+	if(FPS_LIMIT > 0 && fps_timer.get_ticks() < 1000 / FPS_LIMIT) {
+		SDL_Delay((1000 / FPS_LIMIT) - fps_timer.get_ticks());
+	}
+	fps_timer.start();
+
+	if(fps_show && fps_update.get_ticks() > 1000) {
+		sprintf(fps_str, "%d FPS", fps_cnt);
+		printf("%s\n", fps_str);
+		if(fps_surface)
+			SDL_FreeSurface(fps_surface);
+		fps_surface = TTF_RenderText_Solid(m_sys_font, fps_str, m_sys_font_color);
+		if(!fps_surface) {
+			fprintf(stderr, "Error printing FPS to screen\n");
+		}
+		fps_update.start();
+		fps_cnt = 0;
+	}
+
+	if(fps_show) {
+		SDL_Rect offset;
+		offset.x = 10;
+		offset.y= 10;
+		SDL_BlitSurface(fps_surface, 0, screen(), &offset);
+	}
+
+	fps_cnt++;
 }
 
