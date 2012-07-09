@@ -181,16 +181,16 @@ void Engine::handleEvent(SDL_Event &event) {
 					stop();
 					break;
 				case SDLK_UP:
-					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() + .05);
-					break;
-				case SDLK_DOWN:
 					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() - .05);
 					break;
+				case SDLK_DOWN:
+					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() + .05);
+					break;
 				case SDLK_LEFT:
-					m_hero->setVel(m_hero->vel().x() + .05, m_hero->vel().y());
+					m_hero->setVel(m_hero->vel().x() - .05, m_hero->vel().y());
 					break;
 				case SDLK_RIGHT:
-					m_hero->setVel(m_hero->vel().x() - .05, m_hero->vel().y());
+					m_hero->setVel(m_hero->vel().x() + .05, m_hero->vel().y());
 					break;
 			}
 			break;
