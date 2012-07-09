@@ -17,7 +17,7 @@ class Map {
 		int height(void) const;
 		int vertTiles(void) const;
 		int horizTiles(void) const;
-		const Tile *at(int x, int y) const;
+		Tile *at(int x, int y);
 		void draw(Engine &engine);
 
 	private:

@@ -50,8 +50,6 @@ void Character::draw(Engine &engine) {
 	offset.x = pos().x() - engine.camera()->x - (width() / 2);
 	offset.y = pos().y() - engine.camera()->y - (height() / 2);
 
-	fprintf(stderr, "X: %f Y: %f\n", pos().x(), pos().y());
-
 	SDL_BlitSurface(surface(), clip(), engine.screen(), &offset);
 }
 

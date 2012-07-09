@@ -218,6 +218,9 @@ SDL_Surface *Engine::loadImage(const char *path) {
 
 	optimizedImage = SDL_DisplayFormat(loadedImage);
 
+	Uint32 colorkey = SDL_MapRGB(optimizedImage->format, 0, 0xFF, 0xFF);
+	SDL_SetColorKey(optimizedImage, SDL_SRCCOLORKEY, colorkey);
+
 	SDL_FreeSurface(loadedImage);
 	return optimizedImage;
 }
@@ -243,7 +246,6 @@ void Engine::handleFps(void) {
 	fps_timer.start();
 
 	if(fps_show && fps_update.get_ticks() > 1000) {
-		sprintf(fps_str, "%d FPS", fps_cnt);
 		printf("%s\n", fps_str);
 		if(fps_surface)
 			SDL_FreeSurface(fps_surface);

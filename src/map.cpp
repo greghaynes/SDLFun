@@ -8,14 +8,16 @@ Map::Map(int width, int height, SDL_Surface *background)
 	: m_width(width)
 	, m_height(height)
 	, background(background)
-	, m_horiz_tiles(width / TILE_WIDTH)
-	, m_vert_tiles(height / TILE_HEIGHT) {
+	, m_horiz_tiles((width / TILE_WIDTH)+1)
+	, m_vert_tiles((height / TILE_HEIGHT)+1) {
 	m_tiles = new Tile**[horizTiles()];
 	int i;
 	for(i = 0;i<horizTiles();i++) {
 		m_tiles[i] = new Tile*[vertTiles()];
 		memset(m_tiles[i], 0, sizeof(Tile*)*vertTiles());
 	}
+
+	m_tiles[1][1] = new Tile(Tile::StoneSquare1);
 }
 Map::~Map() {
 	int i;
@@ -41,7 +43,7 @@ int Map::horizTiles(void) const {
 	return m_horiz_tiles;
 }
 
-const Tile *Map::at(int x, int y) const {
+Tile *Map::at(int x, int y) {
 	return m_tiles[x][y];
 }
 
@@ -80,5 +82,27 @@ void Map::draw(Engine &engine) {
 	SDL_BlitSurface(background, engine.window(), engine.screen(), &offset);
 
 	/* Render Tiles */
+	int tile_x = camera->x / TILE_WIDTH;
+	int start_tile_y = camera->y / TILE_HEIGHT;
+	int pos_x = tile_x * TILE_WIDTH;
+	int start_pos_y = start_tile_y * TILE_HEIGHT;
+	int tile_y, pos_y;
+	Tile *t;
+	while (pos_x < camera->x + camera->w) {
+		pos_y = start_pos_y;
+		tile_y = start_tile_y;
+		while (pos_y < camera->y + camera->h) {
+			t = at(tile_x, tile_y);
+			if(t) {
+				offset.x = pos_x - camera->x;
+				offset.y = pos_y - camera->y;
+				SDL_BlitSurface(t->surface(), t->clip(), engine.screen(), &offset);
+			}
+			pos_y += TILE_HEIGHT;
+			tile_y++;
+		}
+		pos_x += TILE_WIDTH;
+		tile_x++;
+	}
 }
 
