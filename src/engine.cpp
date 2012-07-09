@@ -187,17 +187,21 @@ void Engine::handleEvent(SDL_Event &event) {
 				case SDLK_q:
 					stop();
 					break;
+				case SDLK_w:
 				case SDLK_UP:
-					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() - .05);
+					m_hero->setVel(m_hero->vel().x(), -HERO_SPEED);
 					break;
+				case SDLK_s:
 				case SDLK_DOWN:
-					m_hero->setVel(m_hero->vel().x(), m_hero->vel().y() + .05);
+					m_hero->setVel(m_hero->vel().x(), HERO_SPEED);
 					break;
+				case SDLK_a:
 				case SDLK_LEFT:
-					m_hero->setVel(m_hero->vel().x() - .05, m_hero->vel().y());
+					m_hero->setVel(-HERO_SPEED, m_hero->vel().y());
 					break;
+				case SDLK_d:
 				case SDLK_RIGHT:
-					m_hero->setVel(m_hero->vel().x() + .05, m_hero->vel().y());
+					m_hero->setVel(HERO_SPEED, m_hero->vel().y());
 					break;
 				case SDLK_f:
 					fps_show = !fps_show;
@@ -205,6 +209,27 @@ void Engine::handleEvent(SDL_Event &event) {
 					break;
 			}
 			break;
+		case SDL_KEYUP:
+			switch(event.key.keysym.sym) {
+				case SDLK_w:
+				case SDLK_UP:
+					m_hero->setVel(m_hero->vel().x(), 0);
+					break;
+				case SDLK_s:
+				case SDLK_DOWN:
+					m_hero->setVel(m_hero->vel().x(), 0);
+					break;
+				case SDLK_a:
+				case SDLK_LEFT:
+					m_hero->setVel(0, m_hero->vel().y());
+					break;
+				case SDLK_d:
+				case SDLK_RIGHT:
+					m_hero->setVel(0, m_hero->vel().y());
+					break;
+			}
+			break;
+		
 	}
 }
 

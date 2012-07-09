@@ -17,5 +17,7 @@
 
 #define FPS_LIMIT 60
 
+#define HERO_SPEED .08
+
 #endif
 
