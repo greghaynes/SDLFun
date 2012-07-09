@@ -10,7 +10,8 @@ set(SDLFun_SRCS
 	src/position.cpp
 	src/velocity.cpp
 	src/map.cpp
-	src/engine.cpp)
+	src/engine.cpp
+	src/tile.cpp)
 
 include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
 

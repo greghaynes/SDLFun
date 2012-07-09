@@ -161,6 +161,14 @@ bool Engine::initWorld(void) {
 		fprintf(stderr, "Could not load background image\n");
 		return false;
 	}
+
+	SDL_Surface *tile_surface = loadImage("data/images/tilesheet.xcf");
+	if(!tile_surface) {
+		fprintf(stderr, "Could not load tiles sheet\n");
+		return false;
+	}
+	init_tiles(tile_surface);
+
 	m_map = new Map(1000, 1000, m_background);
 	return true;
 }
