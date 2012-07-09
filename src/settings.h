@@ -13,7 +13,7 @@
 #define SPRITESHEET "data/sprites/sheet_1.png"
 
 #define TILE_WIDTH 27
-#define TILE_HEIGHT 27
+#define TILE_HEIGHT 28
 
 #define FPS_LIMIT 60
 

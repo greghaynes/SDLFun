@@ -17,7 +17,11 @@ Map::Map(int width, int height, SDL_Surface *background)
 		memset(m_tiles[i], 0, sizeof(Tile*)*vertTiles());
 	}
 
-	m_tiles[1][1] = new Tile(Tile::StoneSquare1);
+	m_tiles[1][5] = new Tile(Tile::StoneSquare1);
+	m_tiles[2][5] = new Tile(Tile::StoneSquare1);
+	m_tiles[3][5] = new Tile(Tile::StoneSquare1);
+	m_tiles[4][5] = new Tile(Tile::StoneSquare1);
+	m_tiles[5][5] = new Tile(Tile::StoneSquare1);
 }
 Map::~Map() {
 	int i;
