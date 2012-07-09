@@ -271,7 +271,7 @@ void Engine::handleFps(void) {
 	fps_timer.start();
 
 	if(fps_show && fps_update.get_ticks() > 1000) {
-		printf("%s\n", fps_str);
+		sprintf(fps_str, "%d FPS", fps_cnt);
 		if(fps_surface)
 			SDL_FreeSurface(fps_surface);
 		fps_surface = TTF_RenderText_Solid(m_sys_font, fps_str, m_sys_font_color);
