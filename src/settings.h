@@ -12,5 +12,8 @@
 
 #define SPRITESHEET "data/sprites/sheet_1.png"
 
+#define TILE_WIDTH 27
+#define TILE_HEIGHT 27
+
 #endif
 
