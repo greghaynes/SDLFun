@@ -10,7 +10,7 @@
 #define SYS_FONT "data/fonts/UniversElse-Regular.ttf"
 #define SYS_FONT_SIZE 18
 
-#define SPRITESHEET "data/sprites/sheet_1.png"
+#define SPRITESHEET "data/images/characters.xcf"
 
 #define TILE_WIDTH 27
 #define TILE_HEIGHT 28

@@ -136,7 +136,7 @@ bool Engine::initCharacters(void) {
 		return false;
 	}
 
-	SDL_Rect cliprect = { 0, 32, 16, 16 };
+	SDL_Rect cliprect = { 27, 18, 18, 18 };
 	m_hero = new Hero(m_spritesheet, cliprect);
 	m_hero->setPos(centered()->x, centered()->y);
 
