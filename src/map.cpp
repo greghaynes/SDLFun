@@ -22,6 +22,11 @@ Map::Map(int width, int height, SDL_Surface *background)
 	m_tiles[3][5] = new Tile(Tile::StoneSquare1);
 	m_tiles[4][5] = new Tile(Tile::StoneSquare1);
 	m_tiles[5][5] = new Tile(Tile::StoneSquare1);
+
+	m_tiles[10][15] = new Tile(Tile::Brick1);
+	m_tiles[11][15] = new Tile(Tile::Brick1);
+	m_tiles[12][15] = new Tile(Tile::Brick1);
+	m_tiles[13][15] = new Tile(Tile::Brick1);
 }
 Map::~Map() {
 	int i;

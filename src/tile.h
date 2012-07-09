@@ -10,6 +10,7 @@ class Tile {
 	public:
 		enum Type {
 			StoneSquare1,
+			Brick1,
 			Last,
 		};
 

@@ -12,6 +12,12 @@ void init_tiles(SDL_Surface *tile_surface) {
 	_tile_clips[Tile::StoneSquare1].y = 12;
 	_tile_clips[Tile::StoneSquare1].w = 28;
 	_tile_clips[Tile::StoneSquare1].h = 27; 
+
+	
+	_tile_clips[Tile::Brick1].x = 60;
+	_tile_clips[Tile::Brick1].y = 12;
+	_tile_clips[Tile::Brick1].w = 28;
+	_tile_clips[Tile::Brick1].h = 27; 
 }
 
 Tile::Tile(Tile::Type type)
