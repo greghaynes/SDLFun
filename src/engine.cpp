@@ -201,6 +201,7 @@ void Engine::handleEvent(SDL_Event &event) {
 					break;
 				case SDLK_f:
 					fps_show = !fps_show;
+					fps_cnt = 0;
 					break;
 			}
 			break;
