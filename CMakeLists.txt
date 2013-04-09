@@ -10,6 +10,7 @@ set(SDLFun_SRCS
 	src/position.cpp
 	src/velocity.cpp
 	src/map.cpp
+    src/mapfactory.cpp
 	src/engine.cpp
 	src/tile.cpp)
 

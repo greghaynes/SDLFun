@@ -9,6 +9,7 @@ class Tile {
 
 	public:
 		enum Type {
+            Empty,
 			StoneSquare1,
 			Brick1,
 			Last,
