@@ -5,10 +5,10 @@
 #include "engine.h"
 
 class Hero 
-	: public Character {
+    : public Character {
 
-	public:
-		Hero(SDL_Surface *spritesheet, const SDL_Rect &clip);
+    public:
+        Hero(SDL_Surface *spritesheet, const SDL_Rect &clip);
 
 };
 
