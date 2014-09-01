@@ -7,20 +7,20 @@ void init_tiles(SDL_Surface *tile_surface);
 
 class Tile {
 
-	public:
-		enum Type {
+    public:
+        enum Type {
             Empty,
-			StoneSquare1,
-			Brick1,
-			Last,
-		};
+            StoneSquare1,
+            Brick1,
+            Last,
+        };
 
-		Tile(Type type);
-		SDL_Surface *surface(void);
-		SDL_Rect *clip(void);
+        Tile(Type type);
+        SDL_Surface *surface(void);
+        SDL_Rect *clip(void);
 
-	private:
-		Type m_type;
+    private:
+        Type m_type;
 
 };
 

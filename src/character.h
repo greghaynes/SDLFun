@@ -10,34 +10,34 @@
 class Engine;
 
 class Character {
-	public:
-		Character(SDL_Surface *spritesheet, const SDL_Rect &clip);
-		~Character();
+    public:
+        Character(SDL_Surface *spritesheet, const SDL_Rect &clip);
+        ~Character();
 
-		const Position &pos(void) const;
-		void setPos(float x, float y);
-		const Velocity &vel(void) const;
-		void setVel(float x, float y);
+        const Position &pos(void) const;
+        void setPos(float x, float y);
+        const Velocity &vel(void) const;
+        void setVel(float x, float y);
 
-		void update(Engine &engine);
-		virtual void draw(Engine &engine);
+        void update(Engine &engine);
+        virtual void draw(Engine &engine);
 
-		SDL_Surface *surface(void);
-		SDL_Rect *clip(void);
+        SDL_Surface *surface(void);
+        SDL_Rect *clip(void);
 
-		int width(void) const;
-		int height(void) const;
+        int width(void) const;
+        int height(void) const;
 
-	protected:
-		virtual void onUpdate(Engine &engine);
+    protected:
+        virtual void onUpdate(Engine &engine);
 
-	private:
-		Position m_pos;
-		Velocity m_vel;
-		SDL_Rect m_clip;
-		SDL_Surface *m_spritesheet;
+    private:
+        Position m_pos;
+        Velocity m_vel;
+        SDL_Rect m_clip;
+        SDL_Surface *m_spritesheet;
 
-		Timer update_timer;
+        Timer update_timer;
 };
 
 #endif

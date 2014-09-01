@@ -9,24 +9,24 @@ class Engine;
 
 class Map {
 
-	public:
-		Map(int width, int height, SDL_Surface *background);
-		~Map();
+    public:
+        Map(int width, int height, SDL_Surface *background);
+        ~Map();
 
-		int width(void) const;
-		int height(void) const;
-		int vertTiles(void) const;
-		int horizTiles(void) const;
-		Tile *at(int x, int y);
-		void draw(Engine &engine);
+        int width(void) const;
+        int height(void) const;
+        int vertTiles(void) const;
+        int horizTiles(void) const;
+        Tile *at(int x, int y);
+        void draw(Engine &engine);
 
-	private:
-		int m_width;
-		int m_height;
-		int m_horiz_tiles;
-		int m_vert_tiles;
-		SDL_Surface *background;
-		Tile ***m_tiles;
+    private:
+        int m_width;
+        int m_height;
+        int m_horiz_tiles;
+        int m_vert_tiles;
+        SDL_Surface *background;
+        Tile ***m_tiles;
 
 };
 
