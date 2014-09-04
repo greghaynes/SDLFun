@@ -1,8 +1,12 @@
 sdlfun
 CMakeCache.txt
 CMakeFiles
+CTestTestfile.cmake
 Makefile
 cmake_install.cmake
 taglist
 tags
 *.swp
+*.a
+Testing
+tests/unit/MapNoise
