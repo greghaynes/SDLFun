@@ -9,11 +9,14 @@ class MapNoise : public MapLayer<double> {
     public:
         explicit MapNoise(uint64_t seed);
 
+        uint64_t getSeed() const;
         double getTileValue(int x, int y);
+        double getTileValue(int x, int y) const;
 
     private:
-        uint64_t getRand(uint64_t seed);
-        double getNormalRand(uint64_t seed);
+        uint64_t getRand(uint64_t seed) const;
+        double getNormalRand(uint64_t seed) const;
+        double getTileValue_(int x, int y) const;
 
         uint64_t seed_;
 };

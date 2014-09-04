@@ -4,6 +4,7 @@
 template <class T>
 class MapLayer {
     public:
+        virtual T getTileValue(int x, int y) const = 0;
         virtual T getTileValue(int x, int y) = 0;
 };
 
