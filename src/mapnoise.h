@@ -15,8 +15,8 @@ class MapNoise : public MapLayer<double> {
 
     private:
         uint64_t getRand(uint64_t seed) const;
-        double getNormalRand(uint64_t seed) const;
-        double getTileValue_(int x, int y) const;
+        double normalizeRand(uint64_t seed) const;
+        uint64_t getTileValue_(int x, int y) const;
 
         uint64_t seed_;
 };

@@ -17,3 +17,37 @@ BOOST_AUTO_TEST_CASE(constructor_test)
     MapNoise *x4 = new MapNoise(0xABCDEF);
     BOOST_CHECK_EQUAL( x4->getSeed(), 0xABCDEF );
 }
+
+BOOST_AUTO_TEST_CASE(get_tile_value)
+{
+    int x = 1, y = 1;
+
+    MapNoise x1(0);
+    double tile_val1 = x1.getTileValue(x, y);
+    BOOST_CHECK_NE( tile_val1, 0.0L );
+
+    MapNoise *x2 = new MapNoise(0);
+    double tile_val2 = x2->getTileValue(x, y);
+    BOOST_CHECK_NE( tile_val2, 0.0L );
+    BOOST_CHECK_EQUAL( tile_val1, tile_val2);
+
+    MapNoise x3(0xFFFFFFFF);
+    double tile_val3 = x3.getTileValue(x, y);
+    BOOST_CHECK_NE( tile_val3, 0.0L );
+    BOOST_CHECK_NE( tile_val3, tile_val2 );
+
+    double tile_val4 = x3.getTileValue(-1, -1);
+    BOOST_CHECK_NE( tile_val4, tile_val3 );
+    BOOST_CHECK_NE( tile_val4, tile_val2 );
+
+    double tile_val5 = x3.getTileValue(1, -1);
+    BOOST_CHECK_NE( tile_val5, tile_val4 );
+    BOOST_CHECK_NE( tile_val5, tile_val3 );
+    BOOST_CHECK_NE( tile_val5, tile_val2 );
+
+    double tile_val6 = x3.getTileValue(-1, 1);
+    BOOST_CHECK_NE( tile_val6, tile_val5 );
+    BOOST_CHECK_NE( tile_val6, tile_val4 );
+    BOOST_CHECK_NE( tile_val6, tile_val3 );
+    BOOST_CHECK_NE( tile_val6, tile_val2 );
+}
