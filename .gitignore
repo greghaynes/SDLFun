@@ -10,3 +10,4 @@ tags
 *.a
 Testing
 tests/unit/MapNoise
+tests/unit/MapCoherentNoiseLayer

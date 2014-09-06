@@ -1,20 +1,25 @@
-#include "mapcoherentnoiselayer.h"
-
 #include "mapnoise.h"
+#include "mapcoherentnoiselayer.h"
+#include "mapsection.h"
+#include "point2d.h"
 
-MapCoherentNoiseLayer::MapCoherentNoiseLayer(uint64_t seed,
-                                             unsigned int amplitude,
-                                             unsigned int wavelength)
-    : map_noise_(0)
-    , amplitude_(amplitude)
-    , wavelength_(wavelength)
-{
+class MapCoherentNoiseSection : public MapSection<int> {
+    public:
+        MapCoherentNoiseSection(uint64_t seed,
+                                Point2d<int> &minRange,
+                                Point2d<int> &maxRange);
+};
+
+MapCoherentNoiseSection::MapCoherentNoiseSection(uint64_t seed,
+    Point2d<int> &minRange,
+    Point2d<int> &maxRange)
+    : MapSection(minRange, maxRange) {
+}
+
+MapCoherentNoiseLayer::MapCoherentNoiseLayer(uint64_t seed)
+    : map_noise_(0) {
     map_noise_ = new MapNoise(seed);
 }
 
-double MapCoherentNoiseLayer::getTileValue(int x, int y)
-{
-    int a_x = (x + wavelength_) - (x % wavelength_);
-    int a_y = (y + wavelength_) - (y % wavelength_);
-    double a = map_noise_->getTileValue(a_x
-}  
+double MapCoherentNoiseLayer::getTileValue(int x, int y) {
+}

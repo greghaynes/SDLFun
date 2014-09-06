@@ -5,3 +5,6 @@ add_definitions (-DBOOST_TEST_DYN_LINK)
 
 add_executable (MapNoise mapnoise.cpp)
 target_link_libraries (MapNoise lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_executable (MapCoherentNoiseLayer mapcoherentnoiselayer.cpp)
+target_link_libraries (MapCoherentNoiseLayer lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})

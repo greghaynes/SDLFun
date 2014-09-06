@@ -15,10 +15,6 @@ double MapNoise::getTileValue(int x, int y) {
     return normalizeRand(getTileValue_(x, y));
 }
 
-double MapNoise::getTileValue(int x, int y) const {
-    return normalizeRand(getTileValue_(x, y));
-}
-
 uint64_t MapNoise::getRand(uint64_t seed) const {
     return (uint64_t)((6364136223846793005 * seed) + 1442695040888963407);
 }

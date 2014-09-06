@@ -11,7 +11,6 @@ class MapNoise : public MapLayer<double> {
 
         uint64_t getSeed() const;
         double getTileValue(int x, int y);
-        double getTileValue(int x, int y) const;
 
     private:
         uint64_t getRand(uint64_t seed) const;
