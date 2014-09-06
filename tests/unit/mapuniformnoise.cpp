@@ -3,8 +3,7 @@
 
 #include "mapuniformnoise.h"
 
-BOOST_AUTO_TEST_CASE(constructor_test)
-{
+BOOST_AUTO_TEST_CASE(constructor_test) {
     MapUniformNoise x1(0);
     BOOST_CHECK_EQUAL( x1.getSeed(), 0 );
 
@@ -18,8 +17,7 @@ BOOST_AUTO_TEST_CASE(constructor_test)
     BOOST_CHECK_EQUAL( x4->getSeed(), 0xABCDEF );
 }
 
-BOOST_AUTO_TEST_CASE(get_tile_value)
-{
+BOOST_AUTO_TEST_CASE(get_tile_value) {
     int x = 1, y = 1;
 
     MapUniformNoise x1(0);

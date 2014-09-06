@@ -9,5 +9,7 @@ tags
 *.swp
 *.a
 Testing
-tests/unit/MapUniformNoise
 tests/unit/MapCoherentNoiseLayer
+tests/unit/MapSection
+tests/unit/MapUniformNoise
+tests/unit/Point2d

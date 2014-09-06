@@ -5,6 +5,7 @@
 
 #include "maplayer.h"
 
+class MapCoherentNoiseSection;
 class MapUniformNoise;
 
 class MapCoherentNoiseLayer : public MapLayer<double>
@@ -13,6 +14,9 @@ class MapCoherentNoiseLayer : public MapLayer<double>
         MapCoherentNoiseLayer(uint64_t seed);
 
         double getTileValue(int x, int y);
+
+    private:
+        MapCoherentNoiseSection *getCoherentNoiseSection(int x, int y);
 
         MapUniformNoise *map_noise_;
 };
