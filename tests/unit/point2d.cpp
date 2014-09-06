@@ -29,3 +29,14 @@ BOOST_AUTO_TEST_CASE(assign_operator) {
     BOOST_CHECK_EQUAL( p2.x, 1 );
     BOOST_CHECK_EQUAL( p2.y, 1 );
 }
+
+BOOST_AUTO_TEST_CASE(equality_operator) {
+    Point2d<int> p1(0, 0), p2(1, 1), p3(1, 0), p4(0, 0);
+
+    BOOST_CHECK_EQUAL( p1 == p1, true );
+    BOOST_CHECK_EQUAL( p1 == p4, true );
+    BOOST_CHECK_EQUAL( p2 == p2, true );
+    BOOST_CHECK_EQUAL( p1 == p2, false );
+    BOOST_CHECK_EQUAL( p2 == p3, false );
+    BOOST_CHECK_EQUAL( p1 == p3, false );
+}

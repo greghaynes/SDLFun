@@ -43,22 +43,22 @@ const Point2d<int> &MapSection<T>::getMaxRange() const {
 
 template <class T>
 const int &MapSection<T>::getXMin() const {
-    return minRange_.x();
+    return minRange_.x;
 }
 
 template <class T>
 const int &MapSection<T>::getYMin() const {
-    return minRange_.y();
+    return minRange_.y;
 }
 
 template <class T>
 const int &MapSection<T>::getXMax() const {
-    return maxRange_.x();
+    return maxRange_.x;
 }
 
 template <class T>
 const int &MapSection<T>::getYMax() const {
-    return maxRange_.y();
+    return maxRange_.y;
 }
 
 template <class T>

@@ -25,6 +25,21 @@ T MockMapSection<T>::getTileValue(int x, int y) {
 }
 
 BOOST_AUTO_TEST_CASE(constructor_test) {
-    Point2d<int> min, max;
+    Point2d<int> min(0, 0), max(1, 1);
     MockMapSection<double> x1(min, max);
+    BOOST_CHECK_EQUAL( x1.getMinRange() == min, true );
+    BOOST_CHECK_EQUAL( x1.getMaxRange() == max, true );
+    BOOST_CHECK_EQUAL( x1.getXMin(), 0 );
+    BOOST_CHECK_EQUAL( x1.getYMin(), 0 );
+    BOOST_CHECK_EQUAL( x1.getXMax(), 1 );
+    BOOST_CHECK_EQUAL( x1.getYMax(), 1 );
+}
+
+BOOST_AUTO_TEST_CASE(is_in_section) {
+    Point2d<int> min(0, 0), max(2, 2);
+    MockMapSection<double> x1(min, max);
+    BOOST_CHECK_EQUAL( x1.isInSection(1, 1), true );
+    BOOST_CHECK_EQUAL( x1.isInSection(0, 0), true );
+    BOOST_CHECK_EQUAL( x1.isInSection(2, 2), true );
+    BOOST_CHECK_EQUAL( x1.isInSection(-1, 0), false );
 }
