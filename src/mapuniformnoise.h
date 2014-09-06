@@ -1,13 +1,13 @@
-#ifndef SDLFUN_MAPNOISE_H
-#define SDLFUN_MAPNOISE_H
+#ifndef SDLFUN_MAP_UNIFORM_NOISE_H
+#define SDLFUN_MAP_UNIFORM_NOISE_H
 
 #include <stdint.h>
 
 #include "maplayer.h"
 
-class MapNoise : public MapLayer<double> {
+class MapUniformNoise : public MapLayer<double> {
     public:
-        explicit MapNoise(uint64_t seed);
+        explicit MapUniformNoise(uint64_t seed);
 
         uint64_t getSeed() const;
         double getTileValue(int x, int y);

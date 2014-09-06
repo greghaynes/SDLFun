@@ -1,12 +1,13 @@
 #ifndef SDLFUN_MAP_SECTION_H
 #define SDLFUN_MAP_SECTION_H
 
+#include "maplayer.h"
 #include "point2d.h"
 
 template <class T>
-class MapSection {
+class MapSection : public MapLayer<T> {
     public:
-        MapSection(Point2d<T> &minRange, Point2d<T> &maxRange);
+        MapSection(const Point2d<T> &minRange, const Point2d<T> &maxRange);
 
         const Point2d<T> &getMinRange() const;
         const Point2d<T> &getMaxRange() const;
@@ -21,7 +22,8 @@ class MapSection {
 };
 
 template <class T>
-MapSection<T>::MapSection(Point2d<T> &minRange, Point2d<T> &maxRange)
+MapSection<T>::MapSection(const Point2d<T> &minRange,
+                          const Point2d<T> &maxRange)
     : minRange_(minRange)
     , maxRange_(maxRange) {
 }
