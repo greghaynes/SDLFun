@@ -27,7 +27,7 @@ template <class T>
 Point2d<T> &Point2d<T>::operator= (const Point2d<T> &other) {
     x = other.x;
     y = other.y;
-    return this;
+    return *this;
 }
 
 #endif
