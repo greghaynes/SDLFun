@@ -20,4 +20,5 @@ double MapCoherentNoiseLayer::getTileValue(int x, int y) {
         return 0;
 
     assert(noise_section != 0);
+    return 0;
 }
