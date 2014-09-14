@@ -10,6 +10,7 @@ set(SdlFun_SRCS
     velocity.cpp
     map.cpp
     mapcoherentnoiselayer.cpp
+    mapcoherentnoisesection.cpp
     mapuniformnoise.cpp
     engine.cpp
     tile.cpp)
