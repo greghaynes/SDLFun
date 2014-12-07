@@ -12,7 +12,8 @@ MapCoherentNoiseLayer::MapCoherentNoiseLayer(uint64_t seed)
     map_noise_ = new MapUniformNoise(seed);
 }
 
-double MapCoherentNoiseLayer::getTileValue(int x, int y) {
+double MapCoherentNoiseLayer::getTileValue(const Point2d<int> &point) {
+    int x = point.x, y = point.y;
     MapCoherentNoiseSection *noise_section =
         MapCoherentNoiseSection::getSection(x, y, map_noise_->getSeed());
 

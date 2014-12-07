@@ -1,7 +1,7 @@
 #ifndef SDLFUN_RECT_2D_H
 #define SDLFUN_RECT_2D_H
 
-#include <point2d.h>
+#include "point2d.h"
 
 template <class T>
 class Rect2d {

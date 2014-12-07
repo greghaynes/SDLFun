@@ -11,8 +11,8 @@ uint64_t MapUniformNoise::getSeed() const {
     return seed_;
 }
 
-double MapUniformNoise::getTileValue(int x, int y) {
-    return normalizeRand(getTileValue_(x, y));
+double MapUniformNoise::getTileValue(const Point2d<int> &point) {
+    return normalizeRand(getTileValue_(point.x, point.y));
 }
 
 uint64_t MapUniformNoise::getRand(uint64_t seed) const {

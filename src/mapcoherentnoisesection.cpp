@@ -34,7 +34,8 @@ MapCoherentNoiseSection::MapCoherentNoiseSection(uint64_t seed,
     : MapSection(minRange, maxRange) {
 }
 
-double MapCoherentNoiseSection::getTileValue(int x, int y) {
+double MapCoherentNoiseSection::getTileValue(const Point2d<int> &point) {
+    int x = point.x, y = point.y;
     assert(isInSection(x, y));
 
     return 0;

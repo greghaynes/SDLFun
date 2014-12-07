@@ -4,13 +4,14 @@
 #include <stdint.h>
 
 #include "maplayer.h"
+#include "point2d.h"
 
 class MapUniformNoise : public MapLayer<double> {
     public:
         explicit MapUniformNoise(uint64_t seed);
 
         uint64_t getSeed() const;
-        double getTileValue(int x, int y);
+        double getTileValue(const Point2d<int> &point);
 
     private:
         uint64_t getRand(uint64_t seed) const;

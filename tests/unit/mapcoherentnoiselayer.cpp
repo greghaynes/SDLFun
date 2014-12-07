@@ -7,5 +7,5 @@
 BOOST_AUTO_TEST_CASE(constructor_test)
 {
     MapCoherentNoiseLayer x1(0);
-    x1.getTileValue(0, 0);
+    x1.getTileValue(Point2d<int>(0, 0));
 }
