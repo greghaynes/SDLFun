@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "mapuniformnoise.h"
+#include "mapuniformbinarynoiselayer.h"
 
 class MapRandomPointSampler {
     public:
@@ -20,7 +20,7 @@ class MapRandomPointSampler {
     private:
         uint64_t seed_;
         Rect2d<int> bounds_;
-        MapUniformNoise uniformNoise_;
+        MapUniformBinaryNoiseLayer uniformNoise_;
 };
 
 #endif

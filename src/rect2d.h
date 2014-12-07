@@ -12,8 +12,12 @@ class Rect2d {
         const Point2d<T> &corner() const;
         T width() const;
         T height() const;
+        bool isInside(const Point2d<T> &point) const;
+        bool isInside(T x, T  y) const;
 
     private:
+        bool isWithinRange(int val, int min, int max) const;
+
         Point2d<T> corner_;
         Point2d<T> size_;
 };
@@ -38,6 +42,22 @@ T Rect2d<T>::width() const {
 template <class T>
 T Rect2d<T>::height() const {
     return size_.y;
+}
+
+template <class T>
+bool Rect2d<T>::isInside(const Point2d<T> &point) const {
+    return isInside(point.x, point.y);
+}
+
+template <class T>
+bool Rect2d<T>::isInside(T x, T y) const {
+    return isWithinRange(x, corner_.x, corner_.x + width()) &&
+           isWithinRange(y, corner_.y, corner_.y + height());
+}
+
+template <class T>
+bool Rect2d<T>::isWithinRange(int val, int min, int max) const {
+    return (val >= min) &&  (val <= max);
 }
 
 #endif

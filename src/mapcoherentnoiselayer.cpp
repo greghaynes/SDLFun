@@ -2,9 +2,7 @@
 
 #include <assert.h>
 
-#include "mapcoherentnoisesection.h"
 #include "mapuniformnoise.h"
-#include "mapsection.h"
 #include "point2d.h"
 
 MapCoherentNoiseLayer::MapCoherentNoiseLayer(uint64_t seed)
@@ -13,13 +11,5 @@ MapCoherentNoiseLayer::MapCoherentNoiseLayer(uint64_t seed)
 }
 
 double MapCoherentNoiseLayer::getTileValue(const Point2d<int> &point) {
-    int x = point.x, y = point.y;
-    MapCoherentNoiseSection *noise_section =
-        MapCoherentNoiseSection::getSection(x, y, map_noise_->getSeed());
-
-    if(!noise_section)
-        return 0;
-
-    assert(noise_section != 0);
     return 0;
 }

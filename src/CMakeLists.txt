@@ -4,9 +4,9 @@ find_package(SDL_ttf REQUIRED)
 
 set(SdlFun_SRCS
     mapcoherentnoiselayer.cpp
-    mapcoherentnoisesection.cpp
     maprandompointsampler.cpp
     mapuniformnoise.cpp
+    mapuniformbinarynoiselayer.cpp
     rand.cpp)
 
 include_directories(${SDL_INCLUDE_DIR} ${SDLIMAGE_INCLUDE_DIR} ${SDLTTF_INCLUDE_DIR})
