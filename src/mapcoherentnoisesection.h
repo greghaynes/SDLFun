@@ -15,7 +15,7 @@ class MapCoherentNoiseSection : public MapSection<double> {
                                 const Point2d<int> &minRange,
                                 const Point2d<int> &maxRange);
 
-        double getTileValue(int x, int y);
+        double getTileValue(const Point2d<int> &point);
 };
 
 #endif

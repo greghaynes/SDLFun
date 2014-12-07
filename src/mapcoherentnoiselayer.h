@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "maplayer.h"
+#include "point2d.h"
 
 class MapCoherentNoiseSection;
 class MapUniformNoise;
@@ -12,7 +13,7 @@ class MapCoherentNoiseLayer : public MapLayer<double> {
     public:
         MapCoherentNoiseLayer(uint64_t seed);
 
-        double getTileValue(int x, int y);
+        double getTileValue(const Point2d<int> &point);
 
     private:
         MapUniformNoise *map_noise_;

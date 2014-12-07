@@ -2,13 +2,14 @@
 #include <boost/test/unit_test.hpp>
 
 #include "mapsection.h"
+#include "point2d.h"
 
 template <class T>
 class MockMapSection : public MapSection<T> {
     public:
         MockMapSection(const Point2d<int> &minRange,
                        const Point2d<int> &maxRange);
-        T getTileValue(int x, int y);
+        T getTileValue(const Point2d<int> &point);
 
         T nextTileVal;
 };
@@ -20,7 +21,7 @@ MockMapSection<T>::MockMapSection(const Point2d<int> &minRange,
 }
 
 template <class T>
-T MockMapSection<T>::getTileValue(int x, int y) {
+T MockMapSection<T>::getTileValue(const Point2d<int> &point) {
     return nextTileVal;
 }
 
