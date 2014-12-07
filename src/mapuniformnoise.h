@@ -14,7 +14,6 @@ class MapUniformNoise : public MapLayer<double> {
         double getTileValue(const Point2d<int> &point);
 
     private:
-        uint64_t getRand(uint64_t seed) const;
         uint64_t getRand(uint64_t seed1, uint64_t seed2) const;
         double normalizeRand(uint64_t seed) const;
         uint64_t getTileValue_(int x, int y) const;

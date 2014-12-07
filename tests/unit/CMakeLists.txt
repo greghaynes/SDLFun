@@ -9,6 +9,9 @@ target_link_libraries (MapCoherentNoiseLayer lsdlfun ${Boost_FILESYSTEM_LIBRARY}
 add_executable (MapCoherentNoiseSection mapcoherentnoisesection.cpp)
 target_link_libraries (MapCoherentNoiseSection lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
+add_executable (MapRandomPointSampler maprandompointsampler.cpp)
+target_link_libraries (MapRandomPointSampler lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
 add_executable (MapSection mapsection.cpp)
 target_link_libraries (MapSection lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
