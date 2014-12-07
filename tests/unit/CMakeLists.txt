@@ -17,3 +17,6 @@ target_link_libraries (MapUniformNoise lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boo
 
 add_executable (Point2d point2d.cpp)
 target_link_libraries (Point2d lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+
+add_executable (Rect2d rect2d.cpp)
+target_link_libraries (Rect2d lsdlfun ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
