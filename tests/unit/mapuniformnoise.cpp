@@ -5,16 +5,14 @@
 
 BOOST_AUTO_TEST_CASE(constructor_test) {
     MapUniformNoise x1(0);
-    BOOST_CHECK_EQUAL( x1.getSeed(), 0 );
 
     MapUniformNoise x2(0xFFFFFFFFF);
-    BOOST_CHECK_EQUAL( x2.getSeed(), 0xFFFFFFFFF );
 
     MapUniformNoise *x3 = new MapUniformNoise(0);
-    BOOST_CHECK_EQUAL( x3->getSeed(), 0 );
+    delete x3;
 
     MapUniformNoise *x4 = new MapUniformNoise(0xABCDEF);
-    BOOST_CHECK_EQUAL( x4->getSeed(), 0xABCDEF );
+    delete x4;
 }
 
 BOOST_AUTO_TEST_CASE(get_tile_value) {
