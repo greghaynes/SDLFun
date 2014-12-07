@@ -10,7 +10,6 @@ class Rect2d {
                T width, T height);
 
         const Point2d<T> &corner() const;
-        const Point2d<T> &upperCorner() const;
         T width() const;
         T height() const;
         bool isInside(const Point2d<T> &point) const;
@@ -33,11 +32,6 @@ Rect2d<T>::Rect2d(const Point2d<T> &corner,
 template <class T>
 const Point2d<T> &Rect2d<T>::corner() const {
     return corner_;
-}
-
-template <class T>
-const Point2d<T> &Rect2d<T>::upperCorner() const {
-    return Point2d<T>(corner.x + width, corner.y + height);
 }
 
 template <class T>
